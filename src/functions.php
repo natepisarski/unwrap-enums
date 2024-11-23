@@ -7,7 +7,7 @@ use BackedEnum;
 use UnitEnum;
 
 /**
- * Unwraps an array of enums or a single enum.
+ * Unwraps a list of enums or a single enum.
  *
  * @param mixed $enums A single enum or iterable of enums. If single, the function returns 1 single value. Otherwise, it will
  * return an array of values. Any value that's already unwrapped will be returned as-is.
@@ -15,7 +15,7 @@ use UnitEnum;
  * @return array|BackedEnum
  * @throws EnumUnwrapException
  */
-function unwrap_enums(mixed $enums, bool $recursive = true): array|BackedEnum
+function unwrap_enums(mixed $enums, bool $recursive = true): mixed
 {
     if (! is_iterable($enums)) {
         if (! $enums instanceof UnitEnum) {
