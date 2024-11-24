@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Natepisarski\UnwrapEnums;
 
@@ -17,12 +17,12 @@ use UnitEnum;
  */
 function unwrap_enums(mixed $enums, bool $recursive = true): mixed
 {
-    if (! is_iterable($enums)) {
-        if (! $enums instanceof UnitEnum) {
+    if (!is_iterable($enums)) {
+        if (!$enums instanceof UnitEnum) {
             return $enums;
         }
 
-        if (! $enums instanceof BackedEnum) {
+        if (!$enums instanceof BackedEnum) {
             $enumClass = $enums::class;
             throw new EnumUnwrapException("$enumClass was passed to unwrap_enums but had no backing value");
         }
@@ -37,7 +37,12 @@ function unwrap_enums(mixed $enums, bool $recursive = true): mixed
         }
     } else {
         foreach ($enums as $enum) {
-            $unwrapped[] = unwrap_enums($enum, false);
+            // Edge Case: If we've run into something that's iterable, we want to make sure to not recursively unwrap it
+            if (is_iterable($enum)) {
+                $unwrapped[] = $enum;
+            } else {
+                $unwrapped[] = unwrap_enums($enum, false);
+            }
         }
     }
 
