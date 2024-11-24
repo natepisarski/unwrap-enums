@@ -73,4 +73,10 @@ class TestUnwrapEnums extends TestCase
         $unwrapped = unwrap_enums($enums, false);
         $this->assertEquals(['one', [TestingBackedEnum::Two, [TestingBackedEnum::Three]]], $unwrapped);
     }
+
+    public function test_unwrapping_null_is_null_still(): void
+    {
+        $value = unwrap_enums(null);
+        $this->assertNull($value);
+    }
 }
